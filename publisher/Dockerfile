@@ -9,24 +9,24 @@
 
 # This is based on the Python 2.7 Alpine Linux image.  See
 # https://hub.docker.com/_/python/ for details on this image.
-FROM python:2.7-alpine
+FROM python:3.8
 
 # Our requirements are minimal, but it's good practice to install them
 # first.  Put things that change less often towards the top of the
 # Dockerfile.  Then if you need to rebuild the images, Docker will
 # start running partway through the Dockerfile and skip over the steps
 # where nothing's changed.
-RUN pip install pika
+RUN pip3 install pika
 
 # Without this setting, Python never prints anything out.
 ENV PYTHONUNBUFFERED=1
 
 # Actually install the application
-WORKDIR /usr/src/app
+WORKDIR /app
 # It's only a single file.  It has to be in the same directory as the
 # Dockerfile, or a subdirectory, but not a parent or sibling.
 COPY publisher.py .
 
 # When you just 'docker run publisher' with no command afterwards,
 # default to this:
-CMD ["python", "/usr/src/app/publisher.py"]
+CMD ["python", "/app/publisher.py"]

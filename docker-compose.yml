@@ -31,32 +31,36 @@ services:
     networks:
       - network
 
-  consumer:
-    # If needed, Docker Compose will automatically run consumer/Dockerfile.
-    build: consumer
-
-    # Environment variables:
-    environment:
-      # The location of the RabbitMQ server.  "amqp" is the protocol;
-      # "rabbitmq" is the hostname.  Note that there is not a guarantee
-      # that the server will start first!  Telling the pika client library
-      # to try multiple times gets around this ordering issue.
-      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-
-    # Again, run on the private network.  Needed to see the "rabbitmq"
-    # magic Docker DNS name.
-    networks:
-      - network
-
-  publisher:
-    # Identical to the consumer.
-    build: publisher
-    environment:
-      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-    networks:
-      - network
-
+#  consumer:
+#    # If needed, Docker Compose will automatically run consumer/Dockerfile.
+#    build: consumer
+#
+#    # Environment variables:
+#    environment:
+#      # The location of the RabbitMQ server.  "amqp" is the protocol;
+#      # "rabbitmq" is the hostname.  Note that there is not a guarantee
+#      # that the server will start first!  Telling the pika client library
+#      # to try multiple times gets around this ordering issue.
+#      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+#
+#    # Again, run on the private network.  Needed to see the "rabbitmq"
+#    # magic Docker DNS name.
+#    networks:
+#      - network
+#    depends_on:
+#      - rabbitmq
+#
+#  publisher:
+#    # Identical to the consumer.
+#    build: publisher
+#    environment:
+#      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+#    networks:
+#      - network
+#    depends_on:
+#      - rabbitmq
 networks:
   # Declare our private network.  We must declare one for the magic
   # Docker DNS to work, but otherwise its default settings are fine.
-  network: {}
+  network: 
+    name: network

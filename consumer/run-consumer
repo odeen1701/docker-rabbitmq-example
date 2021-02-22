@@ -1,0 +1,4 @@
+#!/bin/bash
+docker container rm consumer && \
+docker build --tag consumer . && \
+docker run -d --name consumer --network network consumer
