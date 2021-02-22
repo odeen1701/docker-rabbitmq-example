@@ -1,0 +1,4 @@
+#!/bin/bash
+docker container rm publisher && \
+docker build --tag publisher . && \
+docker run --name publisher --network network publisher
